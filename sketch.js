@@ -6,60 +6,13 @@ let zoomFactor = 3.5;
 let leftArrowPressed = false;
 let rightArrowPressed = false;
 let numberOfHyperbolae = 24;
+let numberOfEllipses = 10;
+let resolution = 100;
+let varFocalDistance = 100;
+let textValue = document.getElementById("focalDistance");
+let leftArrow = document.getElementById('left-arrow');
+let rightArrow = document.getElementById('right-arrow');
 let maxRadius = math.max(window.innerWidth, window.innerHeight) / 2;
-
-function getEllipseData(focalDistance, radius) {
-
-  let thetas = math.range(0, 2 * math.PI, 2 * math.PI / 100).toArray();
-  let data = {
-    x: thetas.map(theta => math.sqrt(math.pow(radius, 2) + math.pow(focalDistance, 2)) * math.sin(theta)),
-    y: thetas.map(theta => radius * math.cos(theta)),
-    mode: 'lines',
-    line: {
-      color: 'rgb(123, 213, 224)',
-      width: 1.5
-    }
-  };
-
-  return data
-
-}
-
-function getHyperbolaData(focalDistance, theta) {
-
-  let radii = math.range(-maxRadius, maxRadius, maxRadius / 100).toArray();
-  let data = {
-    x: radii.map(radius => math.sqrt(math.pow(radius, 2) + math.pow(focalDistance, 2)) * math.sin(theta)),
-    y: radii.map(radius => radius * math.cos(theta)),
-    mode: 'lines',
-    line: {
-      color: 'rgb(237, 188, 79)',
-      width: 1.5
-    }
-  };
-
-  return data
-
-}
-
-function getDataPoints(focalDistance) {
-
-  let ellipseData = [];
-  let maxAngle = 2 * math.PI;
-
-  for (let radius of math.range(0, maxRadius, maxRadius / 8).toArray()) {
-    ellipseData.push(getEllipseData(focalDistance, radius));
-  };
-
-  let hyperbolaData = [];
-  for (let theta of math.range(0, maxAngle, maxAngle / numberOfHyperbolae).toArray()) {
-    hyperbolaData.push(getHyperbolaData(focalDistance, theta));
-  };
-
-  return ellipseData.concat(hyperbolaData)
-};
-
-// plot ellipses and hyperbolae
 let layout = {
   xaxis: {
     autorange: false,
@@ -98,39 +51,90 @@ let options = {
   responsive: true
 };
 
-let textValue = document.getElementById("focalDistance");
-let leftArrow = document.getElementById('left-arrow');
-let rightArrow = document.getElementById('right-arrow');
+// initialize plot
+setup();
 
-// detect touch input
-window.addEventListener('touchstart', function onFirstTouch() {
+// generate data
+function getEllipseData(focalDistance, radius) {
 
-  textValue.style.opacity = 1;
-  document.getElementById('arrow-text').style.opacity = 0;
-  document.getElementById('fullscreen').style.visibility = 'hidden';
+  let thetas = math.range(0, 2 * math.PI, 2 * math.PI / resolution).toArray();
+  let data = {
+    x: thetas.map(theta => math.sqrt(math.pow(radius, 2) + math.pow(focalDistance, 2)) * math.sin(theta)),
+    y: thetas.map(theta => radius * math.cos(theta)),
+    mode: 'lines',
+    line: {
+      color: 'rgb(123, 213, 224)',
+      width: 1.5
+    }
+  };
 
-  window.removeEventListener('touchstart', onFirstTouch, false);
-}, false);
+  return data
 
-// detect key pressed
-window.addEventListener('keydown', function onFirstKeyPressed() {
+}
 
-  textValue.style.opacity = 1;
-  document.getElementById('arrow-text').style.opacity = 0;
-  leftArrow.style.opacity = 0;
-  rightArrow.style.opacity = 0;
-  document.getElementById('fullscreen').style.visibility = 'hidden';
+function getHyperbolaData(focalDistance, theta) {
 
-  window.removeEventListener('keydown', onFirstKeyPressed, false);
-}, false);
+  let radii = math.range(-maxRadius, maxRadius, maxRadius / resolution).toArray();
+  let data = {
+    x: radii.map(radius => math.sqrt(math.pow(radius, 2) + math.pow(focalDistance, 2)) * math.sin(theta)),
+    y: radii.map(radius => radius * math.cos(theta)),
+    mode: 'lines',
+    line: {
+      color: 'rgb(237, 188, 79)',
+      width: 1.5
+    }
+  };
 
-// plot lines
-let varFocalDistance = 100;
+  return data
 
-Plotly.newPlot('plot', getDataPoints(focalDistance=varFocalDistance), layout, options);
+}
 
-textValue.innerHTML = 'focal distance = ' + math.round(varFocalDistance / 100, 2);
-textValue.style.fontSize = "2.5vw";
+function getDataPoints(focalDistance) {
+
+  let ellipseData = [];
+  let maxAngle = 2 * math.PI;
+
+  for (let radius of math.range(0, maxRadius, maxRadius / numberOfEllipses).toArray()) {
+    ellipseData.push(getEllipseData(focalDistance, radius));
+  };
+
+  let hyperbolaData = [];
+  for (let theta of math.range(0, maxAngle, maxAngle / numberOfHyperbolae).toArray()) {
+    hyperbolaData.push(getHyperbolaData(focalDistance, theta));
+  };
+
+  return ellipseData.concat(hyperbolaData)
+};
+
+function setup() {
+  // detect touch input
+  window.addEventListener('touchstart', function onFirstTouch() {
+
+    textValue.style.opacity = 1;
+    document.getElementById('arrow-text').style.opacity = 0;
+    document.getElementById('fullscreen').style.visibility = 'hidden';
+
+    window.removeEventListener('touchstart', onFirstTouch, false);
+  }, false);
+
+  // detect key pressed
+  window.addEventListener('keydown', function onFirstKeyPressed() {
+
+    textValue.style.opacity = 1;
+    document.getElementById('arrow-text').style.opacity = 0;
+    leftArrow.style.opacity = 0;
+    rightArrow.style.opacity = 0;
+    document.getElementById('fullscreen').style.visibility = 'hidden';
+
+    window.removeEventListener('keydown', onFirstKeyPressed, false);
+  }, false);
+
+  // plot ellipses and hyperbolae
+  Plotly.newPlot('plot', getDataPoints(focalDistance=varFocalDistance), layout, options);
+
+  textValue.innerHTML = 'focal distance = ' + math.round(varFocalDistance / 100, 2);
+  textValue.style.fontSize = "2.5vw";
+}
 
 function updatePlot(event) {
 
@@ -188,10 +192,9 @@ function stopRightArrow() {
 }
 
 // Request fullscreen
-let elem = document.documentElement;
-
 function openFullscreen() {
 
+  let elem = document.documentElement;
   if (elem.requestFullscreen) {
     elem.requestFullscreen();
   } else if (elem.mozRequestFullScreen) {
