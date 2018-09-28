@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="A 2D representation of a spinning black hole">
+  <meta name="keywords" content="Black hole, Oblate spheroid, spin, ring singularity, general relativity">
+  <meta name="author" content="Semidan Robaina Estevez">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Black hole</title>
+	<link rel="icon" type="image/png" sizes="32x32" href="imgs/favicon-32x32.png">
+	<script src="libs/plotly-latest.min.js"></script>
+	<script src="libs/math.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body onkeydown="updatePlot(event)" onresize="resizePlot()">
+
+  <p id="focalDistance"></p>
+  <div id="plot"></div>
+  <button id="fullscreen" onclick="openFullscreen();">Click for fullscreen!</button>
+  <p id="arrow-text">Press arrows or use arrow keys to change focal distance</p>
+  <img src="imgs/al.png" alt="left-arrow" id="left-arrow" ontouchstart="moveLeftArrow(event)" ontouchend="stopLeftArrow()">
+	<img src="imgs/ar.png" alt="right-arrow" id="right-arrow" ontouchstart="moveRightArrow(event)" ontouchend="stopRightArrow()">
+
+  <script src="sketch.js"></script>
+
+</body>
+
+</html>
