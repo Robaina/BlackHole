@@ -17,11 +17,11 @@
 
 </head>
 
-<body onkeydown="updatePlot(event)" onresize="resizePlot()">
+<body onresize="resizePlot()">
 
   <p id="focalDistance"></p>
   <div id="plot"></div>
-  <button id="fullscreenButton" onclick="openFullscreen();">Click for fullscreen!</button>
+  <button id="fullscreenButton" onmousedown="openFullscreen()" ontouchend="openFullscreen()" >Press for fullscreen!</button>
 
 	<div class="cont" id="buttonsContainer" onmouseout="hideButtons()" onmouseover="showButtons()">
 

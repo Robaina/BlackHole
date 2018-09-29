@@ -231,4 +231,5 @@ function openFullscreen() {
     elem.msRequestFullscreen();
   }
   document.getElementById('fullscreenButton').style.visibility = 'hidden';
+  console.log('hola');
 }
