@@ -1,5 +1,5 @@
-/* Interactive 2D plot of a black hole
-Semidan Robaina Estevez, September 2018
+/* Interactive 2D plot of a system of oblate spheroidal coordinates
+            Semidan Robaina Estevez, September 2018
 */
 
 let zoomFactor = 3.5;
