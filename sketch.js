@@ -52,7 +52,7 @@ let options = {
 };
 
 // initialize plot
-setup();
+setupPlot();
 
 // generate data
 function getEllipseData(focalDistance, radius) {
@@ -106,7 +106,7 @@ function getDataPoints(focalDistance) {
   return ellipseData.concat(hyperbolaData)
 };
 
-function setup() {
+function setupPlot() {
   // detect touch input
   window.addEventListener('touchstart', function onFirstTouch() {
 
