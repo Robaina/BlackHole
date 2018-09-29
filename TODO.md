@@ -1,2 +1,2 @@
 ## TODO
-1. Fullscreen in phone
+Everything solved so far: suggestions?
