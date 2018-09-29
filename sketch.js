@@ -10,7 +10,7 @@ let numberOfHyperbolae = 24;
 let numberOfEllipses = 10;
 let resolution = 100;
 let varFocalDistance = 100;
-let focalDistanceIncrement = 10;
+let focalDistanceIncrement = (1 / 150) * window.innerWidth;
 let timeStep = 100;
 let textValue = document.getElementById("focalDistance");
 let leftArrow = document.getElementById('leftArrow');
@@ -139,7 +139,8 @@ function setupPlot() {
 }
 
 function updatePlot() {
-
+  focalDistanceIncrement = (1 / 150) * window.innerWidth;
+  
   if (leftArrowPressed) {
     varFocalDistance -= focalDistanceIncrement;
     leftArrowPressed = false;
@@ -231,5 +232,5 @@ function openFullscreen() {
     elem.msRequestFullscreen();
   }
   document.getElementById('fullscreenButton').style.visibility = 'hidden';
-  console.log('hola');
+
 }

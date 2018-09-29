@@ -23,7 +23,7 @@
   <div id="plot"></div>
   <button id="fullscreenButton" onmousedown="openFullscreen()" ontouchend="openFullscreen()" >Press for fullscreen!</button>
 
-	<div class="cont" id="buttonsContainer" onmouseout="hideButtons()" onmouseover="showButtons()">
+	<div class="cont" id="buttonsContainer" onmouseout="hideButtons()" onmouseover="showButtons()" ontouchmove="hideButtons()" ontouchmove="showButtons()">
 
 		<img src="imgs/leftArrow.png" alt="left arrow" id="leftArrow" onmousedown="moveLeftArrow()" onmouseup="stopLeftArrow()" ontouchstart="moveLeftArrow()" ontouchend="stopLeftArrow()">
 		<img src="imgs/pause.png" alt="pause button" id="pauseButton" onmousedown="movePauseButton()" onmouseup="stopPauseButton()" ontouchstart="movePauseButton()" ontouchend="stopPauseButton()">
