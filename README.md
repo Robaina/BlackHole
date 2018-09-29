@@ -1,2 +1,2 @@
-# Black hole
-An interactive 2D plot of a spinning black hole
+# Oblate spheroidal coordinates
+An interactive 2D cut of a 3D oblate spheroidal coordinate system. 
