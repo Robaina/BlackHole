@@ -44,28 +44,44 @@ button {
   left: 0%;
   right: 0%;
 }
-#left-arrow {
-  width: 8%;
+#leftArrow {
+  width: 30%;
   position: absolute;
-  left: 4%;
+  bottom: 0%;
+  opacity: 1;
+  transition: opacity 2s;
+}
+#pauseButton {
+  width: 23%;
+  position: absolute;
+  left: 25.5%;
   bottom: 5%;
   opacity: 1;
   transition: opacity 2s;
 }
-#right-arrow {
-  width: 8%;
+#playButton {
+  width: 25%;
   position: absolute;
-  left: 15%;
+  left: 55.5%;
   bottom: 5%;
   opacity: 1;
   transition: opacity 2s;
 }
-#arrow-text {
-  font-size: 2.5vw;
-  color: white;
-  margin-left: 20px;
+#rightArrow {
+  width: 30%;
   position: absolute;
-  bottom: 20%;
+  left: 72%;
+  bottom: 0%;
   opacity: 1;
   transition: opacity 2s;
+}
+.cont{
+    background: rgba(0, 0, 0, 0);
+    width: 30%;
+    height: 15%;
+    position: absolute;
+    left: 5%;
+    bottom: 5%;
+    opacity: 1;
+    transition: opacity 2s;
 }

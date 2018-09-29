@@ -5,13 +5,19 @@
 let zoomFactor = 3.5;
 let leftArrowPressed = false;
 let rightArrowPressed = false;
+let playButtonPressed = false;
 let numberOfHyperbolae = 24;
 let numberOfEllipses = 10;
 let resolution = 100;
 let varFocalDistance = 100;
+let focalDistanceIncrement = 10;
+let timeStep = 100;
 let textValue = document.getElementById("focalDistance");
-let leftArrow = document.getElementById('left-arrow');
-let rightArrow = document.getElementById('right-arrow');
+let leftArrow = document.getElementById('leftArrow');
+let pauseButton = document.getElementById('pauseButton');
+let playButton = document.getElementById('playButton');
+let rightArrow = document.getElementById('rightArrow');
+let buttonsContainer = document.getElementById('buttonsContainer');
 let maxRadius = math.max(window.innerWidth, window.innerHeight) / 2;
 let layout = {
   xaxis: {
@@ -111,22 +117,18 @@ function setupPlot() {
   window.addEventListener('touchstart', function onFirstTouch() {
 
     textValue.style.opacity = 1;
-    document.getElementById('arrow-text').style.opacity = 0;
-    document.getElementById('fullscreen').style.visibility = 'hidden';
+    document.getElementById('fullscreenButton').style.visibility = 'hidden';
 
     window.removeEventListener('touchstart', onFirstTouch, false);
   }, false);
 
-  // detect key pressed
-  window.addEventListener('keydown', function onFirstKeyPressed() {
+  // detect arrow clicked
+  window.addEventListener('mousedown', function onFirstClick() {
 
     textValue.style.opacity = 1;
-    document.getElementById('arrow-text').style.opacity = 0;
-    leftArrow.style.opacity = 0;
-    rightArrow.style.opacity = 0;
-    document.getElementById('fullscreen').style.visibility = 'hidden';
+    document.getElementById('fullscreenButton').style.visibility = 'hidden';
 
-    window.removeEventListener('keydown', onFirstKeyPressed, false);
+    window.removeEventListener('mousedown', onFirstClick, false);
   }, false);
 
   // plot ellipses and hyperbolae
@@ -136,14 +138,14 @@ function setupPlot() {
   textValue.style.fontSize = "2.5vw";
 }
 
-function updatePlot(event) {
+function updatePlot() {
 
-  if (event.keyCode === 37 || event.which === 37 || leftArrowPressed) { // left arrow
-    varFocalDistance -= 10;
+  if (leftArrowPressed) {
+    varFocalDistance -= focalDistanceIncrement;
     leftArrowPressed = false;
   }
-  if (event.keyCode === 39 || event.which === 39 || rightArrowPressed) { // right arrow
-    varFocalDistance += 10;
+  if (rightArrowPressed || playButtonPressed) {
+    varFocalDistance += focalDistanceIncrement;
     rightArrowPressed = false;
   }
 
@@ -167,28 +169,52 @@ function resizePlot() {
 
 }
 
-function moveLeftArrow(event) {
-
+function moveLeftArrow() {
   leftArrowPressed = true;
-  leftArrow.style.width = "9%";
-  updatePlot(event);
-
+  leftArrow.style.width = "30.5%";
+  updatePlot();
 }
 
 function stopLeftArrow() {
-  leftArrow.style.width = "8%";
+  leftArrow.style.width = "30%";
 }
 
-function moveRightArrow(event) {
-
+function moveRightArrow() {
   rightArrowPressed = true;
-  rightArrow.style.width = "9%";
-  updatePlot(event);
-
+  rightArrow.style.width = "30.5%";
+  updatePlot();
 }
 
 function stopRightArrow() {
-  rightArrow.style.width = "8%";
+  rightArrow.style.width = "30%";
+}
+
+function movePauseButton() {
+  playButtonPressed = false;
+  pauseButton.style.width = "23.5%";
+  clearInterval(playVideo);
+}
+
+function stopPauseButton() {
+  pauseButton.style.width = "23%";
+}
+
+function movePlayButton() {
+  playButtonPressed = true;
+  playButton.style.width = "25.5%";
+  playVideo = setInterval(updatePlot, timeStep);
+}
+
+function stopPlayButton() {
+  playButton.style.width = "25%";
+}
+
+function hideButtons() {
+  buttonsContainer.style.opacity = 0;
+}
+
+function showButtons() {
+  buttonsContainer.style.opacity = 1;
 }
 
 // Request fullscreen
@@ -204,5 +230,5 @@ function openFullscreen() {
   } else if (elem.msRequestFullscreen) {
     elem.msRequestFullscreen();
   }
-  document.getElementById('fullscreen').style.visibility = 'hidden';
+  document.getElementById('fullscreenButton').style.visibility = 'hidden';
 }
