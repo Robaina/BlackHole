@@ -140,7 +140,7 @@ function setupPlot() {
 
 function updatePlot() {
   focalDistanceIncrement = (1 / 150) * window.innerWidth;
-  
+
   if (leftArrowPressed) {
     varFocalDistance -= focalDistanceIncrement;
     leftArrowPressed = false;
@@ -232,5 +232,6 @@ function openFullscreen() {
     elem.msRequestFullscreen();
   }
   document.getElementById('fullscreenButton').style.visibility = 'hidden';
+  document.querySelector("[href='https://github.com/Robaina/OblateSpheroidal']").style.display = 'none';
 
 }
