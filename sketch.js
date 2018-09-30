@@ -135,7 +135,12 @@ function setupPlot() {
   Plotly.newPlot('plot', getDataPoints(focalDistance=varFocalDistance), layout, options);
 
   textValue.innerHTML = 'focal distance = ' + math.round(varFocalDistance / 100, 2);
-  textValue.style.fontSize = "2.5vw";
+  if (window.innerWidth > window.innerHeight) {
+    textValue.style.fontSize = "2.5vw";
+  }
+  else {
+    textValue.style.fontSize = "2.5vh";
+  }
 }
 
 function updatePlot() {
@@ -166,6 +171,12 @@ function resizePlot() {
   maxRadius = math.max(window.innerWidth, window.innerHeight) / 2;
   layout.xaxis.range = [-window.innerWidth / zoomFactor, window.innerWidth / zoomFactor];
   layout.yaxis.range = [-window.innerHeight / zoomFactor, window.innerHeight / zoomFactor];
+  if (window.innerWidth > window.innerHeight) {
+    textValue.style.fontSize = "2.5vw";
+  }
+  else {
+    textValue.style.fontSize = "2.5vh";
+  }
   Plotly.newPlot('plot', getDataPoints(focalDistance=varFocalDistance), layout, options);
 
 }
